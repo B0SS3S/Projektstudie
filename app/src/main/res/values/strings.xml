@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Projektstudie</string>
+
+    <string name="action_settings">Datenbank</string>
+
+    <string name="editText_hint_restaurant">Restaurant</string>
+    <string name="editText_hint_product">Produkt</string>
+    <string name="button_add_product">Hinzufügen</string>
+
+    <string name="editText_errorMessage">Das Feld darf nicht leer sein.</string>
+
+    <string name="dataset_delete">Einträge löschen</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_database">DatabaseActivity</string>
+
+
+</resources>
