@@ -83,6 +83,10 @@ initializeContextualActionBar();
         FloatingActionButton buttonAddProduct = findViewById(R.id.fab);
         final EditText editTextRestaurant = (EditText) findViewById(R.id.editText_restaurant);
         final EditText editTextProduct = (EditText) findViewById(R.id.editText_product);
+        /*
+        final EditText editTextLatitude = (EditText) findViewById(R.id.editText_latitude);
+        final EditText editTextLongitude = (EditText) findViewById(R.id.editText_longitude);
+        */
 
         buttonAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +94,10 @@ initializeContextualActionBar();
 
                 String restaurant = editTextRestaurant.getText().toString();
                 String product = editTextProduct.getText().toString();
+                /*
+                double latitude = Double.parseDouble(editTextLatitude.getText().toString());
+                double longitude = Double.parseDouble(editTextLongitude.getText().toString());
+                */
 
                 if (TextUtils.isEmpty(restaurant)) {
                     editTextRestaurant.setError(getString(R.string.editText_errorMessage));
@@ -100,9 +108,26 @@ initializeContextualActionBar();
                     return;
                 }
 
+                //TODO Überprüfung
+                /*
+                if (TextUtils.isEmpty(latitude)) {
+                    editTextProduct.setError(getString(R.string.editText_errorMessage));
+                    return;
+                }
+                if (TextUtils.isEmpty(longitude)) {
+                    editTextProduct.setError(getString(R.string.editText_errorMessage));
+                    return;
+                }
+                */
+
                 editTextRestaurant.setText("");
                 editTextProduct.setText("");
+                /*
+                editTextLatitude.setText("");
+                editTextLongitude.setText("");
+                */
 
+                //dataSource.createShoppingMemo(product, restaurant, latitude, longitude);
                 dataSource.createShoppingMemo(product, restaurant);
 
                 InputMethodManager inputMethodManager;

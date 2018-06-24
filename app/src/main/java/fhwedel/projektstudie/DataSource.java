@@ -21,6 +21,8 @@ public class DataSource {
             DatabaseHelper.COLUMN_ID,
             DatabaseHelper.COLUMN_PRODUCT,
             DatabaseHelper.COLUMN_RESTAURANT
+           // DatabaseHelper.COLUMN_LATITUDE,
+           // DatabaseHelper.COLUMN_LONGITUDE
     };
 
     public DataSource(Context context) {
@@ -39,10 +41,15 @@ public class DataSource {
         Log.d(LOG_TAG, "Datenbank mit Hilfe des DbHelpers geschlossen.");
     }
 
+    //public Dataset createShoppingMemo(String product, String restaurant, double latitude, double longitude) {
     public Dataset createShoppingMemo(String product, String restaurant) {
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.COLUMN_PRODUCT, product);
         values.put(DatabaseHelper.COLUMN_RESTAURANT, restaurant);
+        /*
+        values.put(DatabaseHelper.COLUMN_LATITUDE, latitude);
+        values.put(DatabaseHelper.COLUMN_LONGITUDE, longitude);
+        */
 
         long insertId = database.insert(DatabaseHelper.TABLE_PROJEKTSTUDIE, null, values);
 
@@ -71,11 +78,20 @@ public class DataSource {
         int idIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_ID);
         int idProduct = cursor.getColumnIndex(DatabaseHelper.COLUMN_PRODUCT);
         int idRestaurant = cursor.getColumnIndex(DatabaseHelper.COLUMN_RESTAURANT);
+        /*
+        int idLatitude = cursor.getColumnIndex(DatabaseHelper.COLUMN_LATITUDE);
+        int idLongitude = cursor.getColumnIndex(DatabaseHelper.COLUMN_LONGITUDE);
+        */
 
         String product = cursor.getString(idProduct);
         String restaurant = cursor.getString(idRestaurant);
         long id = cursor.getLong(idIndex);
+        /*
+        double latitude = cursor.getDouble(idLatitude);
+        double longitude = cursor.getDouble(idLongitude);
+        */
 
+        //Dataset dataset = new Dataset(product, restaurant, id, latitude, longitude);
         Dataset dataset = new Dataset(product, restaurant, id);
 
         return dataset;

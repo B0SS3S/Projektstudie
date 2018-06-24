@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
-            Intent intent = new Intent(this, DatabaseActivity.class);
+            Intent intent = new Intent(this, DatabaseActivity2.class);
             startActivity(intent);
             return true;
         }

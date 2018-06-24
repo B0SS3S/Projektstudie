@@ -17,12 +17,19 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_PRODUCT = "product";
     public static final String COLUMN_RESTAURANT = "restaurant";
+    /*
+    public static final String COLUMN_LATITUDE = "latitude";
+    public static final String COLUMN_LONGITUDE = "longitude";
+    */
 
     public static final String SQL_CREATE =
             "CREATE TABLE " + TABLE_PROJEKTSTUDIE +
                     "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_PRODUCT + " TEXT NOT NULL, " +
-                    COLUMN_RESTAURANT + " TEXT NOT NULL);";
+                    COLUMN_RESTAURANT + " TEXT NOT NULL); ";
+         //           COLUMN_RESTAURANT + " TEXT NOT NULL, " +
+         //   COLUMN_LATITUDE + " TEXT NOT NULL, " +
+         //   COLUMN_LONGITUDE + " TEXT NOT NULL); ";
 
 
     public DatabaseHelper(Context context) {

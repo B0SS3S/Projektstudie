@@ -13,7 +13,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="78dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <EditText
@@ -27,14 +27,31 @@
         <EditText
             android:id="@+id/editText_product"
             android:layout_width="match_parent"
-            android:layout_height="71dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="@string/editText_hint_product"
             android:inputType="text" />
+        <!--
+        <EditText
+            android:id="@+id/editText_latitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/editText_hint_latitude"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/editText_longitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/editText_hint_longitude"
+            android:inputType="text" />
+            -->
     </LinearLayout>
 
     <ListView
         android:id="@+id/listview_datasets"
         android:layout_width="match_parent"
-        android:layout_height="389dp" />
+        android:layout_height="match_parent" />
 </LinearLayout>

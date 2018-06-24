@@ -5,7 +5,12 @@
 
     <string name="editText_hint_restaurant">Restaurant</string>
     <string name="editText_hint_product">Produkt</string>
+    <!--
+    <string name="editText_hint_latitude">Breite</string>
+    <string name="editText_hint_longitude">Länge</string>
+    -->
     <string name="button_add_product">Hinzufügen</string>
+
 
     <string name="editText_errorMessage">Das Feld darf nicht leer sein.</string>
 
