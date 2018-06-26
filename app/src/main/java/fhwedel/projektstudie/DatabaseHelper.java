@@ -7,6 +7,7 @@ import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
 
+
     private static final String LOG_TAG = DatabaseHelper.class.getSimpleName();
 
     public static final String DB_NAME = "projektstudie.db";
@@ -21,6 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String COLUMN_LATITUDE = "latitude";
     public static final String COLUMN_LONGITUDE = "longitude";
     */
+
 
     public static final String SQL_CREATE =
             "CREATE TABLE " + TABLE_PROJEKTSTUDIE +

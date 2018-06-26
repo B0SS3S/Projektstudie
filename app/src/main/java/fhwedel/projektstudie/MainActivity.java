@@ -1,42 +1,25 @@
 package fhwedel.projektstudie;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
-import java.util.List;
-
-import android.view.inputmethod.InputMethodManager;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
-import android.util.SparseBooleanArray;
-import android.view.ActionMode;
-import android.widget.AbsListView;
+import android.widget.Toast;
 
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import fhwedel.projektstudie.location.LocationService;
@@ -46,6 +29,10 @@ import fhwedel.projektstudie.location.NoLocationException;
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
 
     private GoogleMap mMap;
+    private Marker mPosition;
+    private Marker mSydney;
+    private EditText search;
+    private String searchStr;
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
@@ -55,10 +42,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d(LOG_TAG, "Das Datenquellen-Objekt wird angelegt.");
-
-
-        //initializeContextualActionBar();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.maps);
@@ -72,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
         }
+
+
 
     }
 
@@ -87,6 +72,37 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+    }
+
+    public void buttonSearchClicked(View view)  {
+        //TODO
+        this.search = (EditText)this.findViewById(R.id.editSearch);
+        searchStr = search.getText().toString();
+
+
+        if(searchStr.equals("")) {
+            Toast.makeText(getApplicationContext(),
+                    "Please enter a Dish", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+
+        //Datenbankabfrage einfügen (Methodenaufruf)
+
+        //Wenn Gericht nicht vorhanden (Methodenaufruf)
+        //TODO noch auf false setzen wenn Methode vorhanden ist
+        boolean available = true;
+
+        if(!available) {
+            Toast.makeText(getApplicationContext(),
+                    "The Dish you´d like to eat, is not near to you", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+
+        LatLng sydney = new LatLng(-34, 151);
+        mSydney = mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12));
     }
 
     @Override
@@ -118,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void whenLocationUpdate(Location location) {
         if (mMap != null) {
             LatLng actualLocation = new LatLng(location.getLatitude(), location.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(actualLocation).title("Aktuelle Location"));
+            mPosition = mMap.addMarker(new MarkerOptions().position(actualLocation).title("Aktuelle Location"));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actualLocation, 12));
         }
     }
