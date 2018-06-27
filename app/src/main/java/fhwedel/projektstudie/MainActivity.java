@@ -22,6 +22,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fhwedel.projektstudie.location.LocationService;
 import fhwedel.projektstudie.location.NoLocationException;
 
@@ -33,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Marker mSydney;
     private EditText search;
     private String searchStr;
+
+    private final List<Note> noteList = new ArrayList<Note>();
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
@@ -76,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void buttonSearchClicked(View view)  {
         //TODO
+        int counter = 0;
         this.search = (EditText)this.findViewById(R.id.editSearch);
         searchStr = search.getText().toString();
 
@@ -86,14 +92,21 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             return;
         }
 
+        //TODO Datenbankabfrage einfügen (Methodenaufruf)
+        MyDatabaseHelper db = new DatabaseActivity2().getDatabase();
+        List<Note> list=  db.getAllNotes();
 
-        //Datenbankabfrage einfügen (Methodenaufruf)
+        for(int i = 0; i < list.size(); i++){
+            Note note = list.get(i);
+            if (note.getNoteMenu().contains(searchStr)){
+                LatLng tmp = new LatLng(note.getNoteLatitude(),note.getNoteLongitude());
+                mMap.addMarker(new MarkerOptions().position(tmp));
+                counter++;
+            }
+        }
 
-        //Wenn Gericht nicht vorhanden (Methodenaufruf)
-        //TODO noch auf false setzen wenn Methode vorhanden ist
-        boolean available = true;
-
-        if(!available) {
+        //Wenn Gericht nicht vorhanden
+        if(counter < 1) {
             Toast.makeText(getApplicationContext(),
                     "The Dish you´d like to eat, is not near to you", Toast.LENGTH_LONG).show();
             return;

@@ -20,6 +20,8 @@ import java.util.List;
 
 public class DatabaseActivity2 extends AppCompatActivity {
 
+    //TODO AUfruf Datenbankabfrage
+
     private ListView listView;
 
     private static final int MENU_ITEM_VIEW = 111;
@@ -32,6 +34,7 @@ public class DatabaseActivity2 extends AppCompatActivity {
 
     private final List<Note> noteList = new ArrayList<Note>();
     private ArrayAdapter<Note> listViewAdapter;
+    MyDatabaseHelper db = new MyDatabaseHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,7 @@ public class DatabaseActivity2 extends AppCompatActivity {
         // Get ListView object from xml
         listView = (ListView) findViewById(R.id.listView);
 
-        MyDatabaseHelper db = new MyDatabaseHelper(this);
+
         db.createDefaultNotesIfNeed();
 
         List<Note> list=  db.getAllNotes();
@@ -67,6 +70,10 @@ public class DatabaseActivity2 extends AppCompatActivity {
         registerForContextMenu(this.listView);
     }
 
+    //Getter gebaut um Datenbank bei MainActivity zu haben
+    public MyDatabaseHelper getDatabase(){
+        return db;
+    }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View view,

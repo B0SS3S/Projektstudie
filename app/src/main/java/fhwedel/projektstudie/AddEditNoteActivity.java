@@ -56,15 +56,28 @@ public class AddEditNoteActivity extends AppCompatActivity {
 
         String restaurant = this.restaurant.getText().toString();
         String menu = this.menu.getText().toString();
-        double latitude = Double.parseDouble(this.latitude.getText().toString());
-        double longitude = Double.parseDouble(this.longitude.getText().toString());
+        Double latitude = Double.parseDouble(this.latitude.getText().toString());
+        Double longitude = Double.parseDouble(this.longitude.getText().toString());
 
-        //TODO latitude und longitude abfragen
         if(restaurant.equals("") || menu.equals("")) {
             Toast.makeText(getApplicationContext(),
                     "Please enter restaurant & menu", Toast.LENGTH_LONG).show();
             return;
         }
+
+        //TODO latitude und longitude abfragen (!= null / NaN() / ...)
+        /*
+        if(latitude.isNaN()){
+            Toast.makeText(getApplicationContext(),
+                    "Please enter a latitude", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(longitude.isNaN()){
+            Toast.makeText(getApplicationContext(),
+                    "Please enter a longitude", Toast.LENGTH_LONG).show();
+            return;
+        }
+        */
 
         if(mode==MODE_CREATE ) {
             this.note= new Note(restaurant,menu, latitude, longitude);
