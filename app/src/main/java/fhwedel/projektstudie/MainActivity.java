@@ -36,19 +36,23 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private EditText search;
     private String searchStr;
 
-
     private final List<Note> noteList = new ArrayList<Note>();
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
     MyDatabaseHelper db = new MyDatabaseHelper(this);
     List<Note> list;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //TODO Ortung überprüfen
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        db.createDefaultDatabase();
+
+        list = db.getAllNotes();
+        this.noteList.addAll(list);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.maps);
@@ -62,36 +66,20 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
         }
-
-
-        db.createDefaultNotesIfNeed();
-
-        list = db.getAllNotes();
-        this.noteList.addAll(list);
-
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
     }
 
     public void buttonSearchClicked(View view) {
-        //TODO Radius einführen??
+        //TODO Radius einführen?
+
         mMap.clear();
         int counter = 0;
         this.search = (EditText) this.findViewById(R.id.editSearch);
         searchStr = search.getText().toString();
-
 
         if (searchStr.equals("")) {
             Toast.makeText(getApplicationContext(),
@@ -100,11 +88,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         //Alles ausgeben
-        if(searchStr.equals("ALLES")){
-            for(int i = 0; i < list.size(); i++){
+        if (searchStr.equals("ALLES")) {
+            for (int i = 0; i < list.size(); i++) {
                 Note note = list.get(i);
                 LatLng tmp = new LatLng(note.getNoteLatitude(), note.getNoteLongitude());
-                mMap.addMarker(new MarkerOptions().position(tmp).title(note.getNoteRestaurant()+" - "+note.getNoteMenu()));
+                mMap.addMarker(new MarkerOptions().position(tmp).title(note.getNoteRestaurant() + " - " + note.getNoteMenu()));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(tmp, 12));
                 counter++;
             }
@@ -114,12 +102,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             Note note = list.get(i);
             if (note.getNoteMenu().contains(searchStr)) {
                 LatLng tmp = new LatLng(note.getNoteLatitude(), note.getNoteLongitude());
-                mMap.addMarker(new MarkerOptions().position(tmp).title(note.getNoteRestaurant()+" - "+note.getNoteMenu()));
+                mMap.addMarker(new MarkerOptions().position(tmp).title(note.getNoteRestaurant() + " - " + note.getNoteMenu()));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(tmp, 12));
                 counter++;
             }
         }
-
 
         //Wenn Gericht nicht vorhanden
         if (counter < 1) {
@@ -150,7 +137,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             startActivity(intent);
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

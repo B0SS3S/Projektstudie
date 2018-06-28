@@ -58,27 +58,46 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-
-    // If Note table has no data
-    // default, Insert 2 records.
-    public void createDefaultNotesIfNeed() {
+    public void createDefaultDatabase() {
         int count = this.getNotesCount();
         if (count == 0) {
+
+            //Hamburger Fraktion
             Note note1 = new Note("Minies",
                     "Pizza, Pasta", 53.551223, 9.968452);
             Note note2 = new Note("Mickies",
                     "Burger, Pommes", 53.559669, 9.995836);
             Note note3 = new Note("Goofys",
-                    "Pasta", 53.553878, 9.993542);
+                    "Pasta, Salat", 53.554030, 9.991413);
             Note note4 = new Note("Hafenkante",
                     "Fisch", 53.543842, 9.9799203);
             Note note5 = new Note("Boot",
                     "Fisch, Fischbrötchen, Lachs", 53.562367, 10.004804);
+
+            //Wedeler Fraktion
+            Note note6 = new Note("Wedeler Wurst",
+                    "Currywurst, Pommes", 53.577694, 9.727997);
+            Note note7 = new Note("Taverna",
+                    "Gyyros, Salat", 53.576213, 9.715068);
+            Note note8 = new Note("McDonald´s",
+                    "Burger, Pommes", 53.583334, 9.723802);
+            Note note9 = new Note("Burger King",
+                    "Burger, Pommes", 53.583818, 9.726226);
+            Note note10 = new Note("Subways",
+                    "Sandwich, Baguette, Sub, Salat", 53.584478, 9.724300);
+            Note note11 = new Note("Italiano",
+                    "Pizza, Pasta, Salat", 53.577737, 9.742876);
             this.addNote(note1);
             this.addNote(note2);
             this.addNote(note3);
             this.addNote(note4);
             this.addNote(note5);
+            this.addNote(note6);
+            this.addNote(note7);
+            this.addNote(note8);
+            this.addNote(note9);
+            this.addNote(note10);
+            this.addNote(note11);
         }
     }
 

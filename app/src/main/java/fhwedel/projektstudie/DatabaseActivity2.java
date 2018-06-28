@@ -44,7 +44,7 @@ public class DatabaseActivity2 extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listView);
 
 
-        db.createDefaultNotesIfNeed();
+        db.createDefaultDatabase();
 
         List<Note> list = db.getAllNotes();
         this.noteList.addAll(list);
