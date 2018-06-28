@@ -33,9 +33,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private GoogleMap mMap;
     private Marker mPosition;
-    private Marker mSydney;
     private EditText search;
     private String searchStr;
+
 
     private final List<Note> noteList = new ArrayList<Note>();
 
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             return;
         }
 
-        //TODO Datenbankabfrage einfügen (Methodenaufruf)
+        //TODO noch Fehler???
         MyDatabaseHelper db = new DatabaseActivity2().getDatabase();
         List<Note> list=  db.getAllNotes();
 
@@ -111,11 +111,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     "The Dish you´d like to eat, is not near to you", Toast.LENGTH_LONG).show();
             return;
         }
-
-
-        LatLng sydney = new LatLng(-34, 151);
-        mSydney = mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12));
     }
 
     @Override

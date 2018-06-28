@@ -1,3 +1,5 @@
+//TODO ALT -> LÖSCHEN
+
 package fhwedel.projektstudie;
 
 import android.content.Context;

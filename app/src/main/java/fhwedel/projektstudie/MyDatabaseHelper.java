@@ -24,13 +24,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     // Table name: Note.
     private static final String TABLE_NOTE = "Note";
 
-    private static final String COLUMN_NOTE_ID ="Note_Id";
-    private static final String COLUMN_NOTE_RESTAURANT ="Note_Restaurant";
+    private static final String COLUMN_NOTE_ID = "Note_Id";
+    private static final String COLUMN_NOTE_RESTAURANT = "Note_Restaurant";
     private static final String COLUMN_NOTE_MENU = "Note_Menu";
     private static final String COLUMN_NOTE_LATITUDE = "Note_Latitude";
     private static final String COLUMN_NOTE_LONGITUDE = "Note_Longitude";
 
-    public MyDatabaseHelper(Context context)  {
+    public MyDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -61,9 +61,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     // If Note table has no data
     // default, Insert 2 records.
-    public void createDefaultNotesIfNeed()  {
+    public void createDefaultNotesIfNeed() {
         int count = this.getNotesCount();
-        if(count ==0 ) {
+        if (count == 0) {
             Note note1 = new Note("Minies",
                     "Pizza", 9.1, 9.1);
             Note note2 = new Note("Mickies",
@@ -98,9 +98,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_NOTE, new String[] { COLUMN_NOTE_ID,
-                        COLUMN_NOTE_RESTAURANT, COLUMN_NOTE_MENU, COLUMN_NOTE_LATITUDE, COLUMN_NOTE_LONGITUDE }, COLUMN_NOTE_ID + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
+        Cursor cursor = db.query(TABLE_NOTE, new String[]{COLUMN_NOTE_ID,
+                        COLUMN_NOTE_RESTAURANT, COLUMN_NOTE_MENU, COLUMN_NOTE_LATITUDE, COLUMN_NOTE_LONGITUDE}, COLUMN_NOTE_ID + "=?",
+                new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
@@ -112,7 +112,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
 
     public List<Note> getAllNotes() {
-        Log.i(TAG, "MyDatabaseHelper.getAllNotes ... " );
+        Log.i(TAG, "MyDatabaseHelper.getAllNotes ... ");
 
         List<Note> noteList = new ArrayList<Note>();
         // Select All Query
@@ -140,7 +140,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public int getNotesCount() {
-        Log.i(TAG, "MyDatabaseHelper.getNotesCount ... " );
+        Log.i(TAG, "MyDatabaseHelper.getNotesCount ... ");
 
         String countQuery = "SELECT  * FROM " + TABLE_NOTE;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -156,7 +156,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
 
     public int updateNote(Note note) {
-        Log.i(TAG, "MyDatabaseHelper.updateNote ... "  + note.getNoteRestaurant());
+        Log.i(TAG, "MyDatabaseHelper.updateNote ... " + note.getNoteRestaurant());
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -172,11 +172,11 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void deleteNote(Note note) {
-        Log.i(TAG, "MyDatabaseHelper.updateNote ... " + note.getNoteRestaurant() );
+        Log.i(TAG, "MyDatabaseHelper.updateNote ... " + note.getNoteRestaurant());
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NOTE, COLUMN_NOTE_ID + " = ?",
-                new String[] { String.valueOf(note.getNoteId()) });
+                new String[]{String.valueOf(note.getNoteId())});
         db.close();
     }
 

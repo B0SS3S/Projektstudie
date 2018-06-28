@@ -10,21 +10,21 @@ public class Note implements Serializable {
     private double noteLatitude;
     private double noteLongitude;
 
-    public Note()  {
+    public Note() {
 
     }
 
-    public Note(  String noteRestaurant, String noteMenu, double noteLatitude, double noteLongitude) {
+    public Note(String noteRestaurant, String noteMenu, double noteLatitude, double noteLongitude) {
         this.noteRestaurant = noteRestaurant;
-        this.noteMenu= noteMenu;
+        this.noteMenu = noteMenu;
         this.noteLatitude = noteLatitude;
         this.noteLongitude = noteLongitude;
     }
 
     public Note(int noteId, String noteRestaurant, String noteMenu, double noteLatitude, double noteLongitude) {
-        this.noteId= noteId;
+        this.noteId = noteId;
         this.noteRestaurant = noteRestaurant;
-        this.noteMenu= noteMenu;
+        this.noteMenu = noteMenu;
         this.noteLatitude = noteLatitude;
         this.noteLongitude = noteLongitude;
     }
@@ -36,6 +36,7 @@ public class Note implements Serializable {
     public void setNoteId(int noteId) {
         this.noteId = noteId;
     }
+
     public String getNoteRestaurant() {
         return noteRestaurant;
     }
@@ -53,24 +54,24 @@ public class Note implements Serializable {
         this.noteMenu = noteMenu;
     }
 
-    public double getNoteLatitude(){
+    public double getNoteLatitude() {
         return noteLatitude;
     }
 
-    public void setNoteLatitude(double noteLatitude){
+    public void setNoteLatitude(double noteLatitude) {
         this.noteLatitude = noteLatitude;
     }
 
-    public double getNoteLongitude(){
+    public double getNoteLongitude() {
         return noteLongitude;
     }
 
-    public void setNoteLongitude(double noteLongitude){
+    public void setNoteLongitude(double noteLongitude) {
         this.noteLongitude = noteLongitude;
     }
 
     @Override
-    public String toString()  {
+    public String toString() {
         return this.noteRestaurant;
     }
 

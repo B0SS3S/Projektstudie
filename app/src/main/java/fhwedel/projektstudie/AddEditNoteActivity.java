@@ -27,16 +27,16 @@ public class AddEditNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_note);
 
-        this.restaurant = (EditText)this.findViewById(R.id.text_restaurant);
-        this.menu = (EditText)this.findViewById(R.id.text_menu);
-        this.latitude = (EditText)this.findViewById(R.id.latitude);
-        this.longitude = (EditText)this.findViewById(R.id.longitude);
+        this.restaurant = (EditText) this.findViewById(R.id.text_restaurant);
+        this.menu = (EditText) this.findViewById(R.id.text_menu);
+        this.latitude = (EditText) this.findViewById(R.id.latitude);
+        this.longitude = (EditText) this.findViewById(R.id.longitude);
 
         Intent intent = this.getIntent();
         this.note = (Note) intent.getSerializableExtra("note");
-        if(note== null)  {
+        if (note == null) {
             this.mode = MODE_CREATE;
-        } else  {
+        } else {
             this.mode = MODE_EDIT;
             this.restaurant.setText(note.getNoteRestaurant());
             this.menu.setText(note.getNoteMenu());
@@ -49,40 +49,44 @@ public class AddEditNoteActivity extends AppCompatActivity {
     }
 
 
-
     // User Click on the Save button.
-    public void buttonSaveClicked(View view)  {
+    public void buttonSaveClicked(View view) {
         MyDatabaseHelper db = new MyDatabaseHelper(this);
 
         String restaurant = this.restaurant.getText().toString();
         String menu = this.menu.getText().toString();
-        Double latitude = Double.parseDouble(this.latitude.getText().toString());
-        Double longitude = Double.parseDouble(this.longitude.getText().toString());
+        String strLat = this.latitude.getText().toString();
+        String strLong = this.longitude.getText().toString();
+        Double latitude;
+        Double longitude;
 
-        if(restaurant.equals("") || menu.equals("")) {
+        if (restaurant.equals("") || menu.equals("")) {
             Toast.makeText(getApplicationContext(),
                     "Please enter restaurant & menu", Toast.LENGTH_LONG).show();
             return;
         }
 
-        //TODO latitude und longitude abfragen (!= null / NaN() / ...)
-        /*
-        if(latitude.isNaN()){
+        if (strLat.equals("")) {
             Toast.makeText(getApplicationContext(),
                     "Please enter a latitude", Toast.LENGTH_LONG).show();
             return;
+        } else {
+            latitude = Double.parseDouble(this.latitude.getText().toString());
         }
-        if(longitude.isNaN()){
-            Toast.makeText(getApplicationContext(),
-                    "Please enter a longitude", Toast.LENGTH_LONG).show();
-            return;
-        }
-        */
 
-        if(mode==MODE_CREATE ) {
-            this.note= new Note(restaurant,menu, latitude, longitude);
+        if (strLong.equals("")) {
+            Toast.makeText(getApplicationContext(),
+                    "Please enter a latitude", Toast.LENGTH_LONG).show();
+            return;
+        } else {
+            longitude = Double.parseDouble(this.longitude.getText().toString());
+        }
+
+
+        if (mode == MODE_CREATE) {
+            this.note = new Note(restaurant, menu, latitude, longitude);
             db.addNote(note);
-        } else  {
+        } else {
             this.note.setNoteRestaurant(restaurant);
             this.note.setNoteMenu(menu);
             this.note.setNoteLatitude(latitude);
@@ -97,7 +101,7 @@ public class AddEditNoteActivity extends AppCompatActivity {
     }
 
     // User Click on the Cancel button.
-    public void buttonCancelClicked(View view)  {
+    public void buttonCancelClicked(View view) {
         // Do nothing, back MainActivity.
         this.onBackPressed();
     }
