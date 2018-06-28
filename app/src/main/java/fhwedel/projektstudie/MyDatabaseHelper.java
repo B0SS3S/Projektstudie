@@ -65,11 +65,20 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         int count = this.getNotesCount();
         if (count == 0) {
             Note note1 = new Note("Minies",
-                    "Pizza", 9.1, 9.1);
+                    "Pizza, Pasta", 53.551223, 9.968452);
             Note note2 = new Note("Mickies",
-                    "Burger", 9.2, 9.2);
+                    "Burger, Pommes", 53.559669, 9.995836);
+            Note note3 = new Note("Goofys",
+                    "Pasta", 53.553878, 9.993542);
+            Note note4 = new Note("Hafenkante",
+                    "Fisch", 53.543842, 9.9799203);
+            Note note5 = new Note("Boot",
+                    "Fisch, Fischbrötchen, Lachs", 53.562367, 10.004804);
             this.addNote(note1);
             this.addNote(note2);
+            this.addNote(note3);
+            this.addNote(note4);
+            this.addNote(note5);
         }
     }
 

@@ -29,7 +29,7 @@ public class LocationService extends LocationCallback {
            activity.whenLocationUpdate(location);
            locationClient.removeLocationUpdates(this);
        }
-        Toast.makeText(context, "Hallo Location", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Found your Location", Toast.LENGTH_LONG).show();
 
     }
 

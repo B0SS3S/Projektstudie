@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private final List<Note> noteList = new ArrayList<Note>();
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
+    MyDatabaseHelper db = new MyDatabaseHelper(this);
+    List<Note> list;
 
 
     @Override
@@ -62,6 +64,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
 
+        db.createDefaultNotesIfNeed();
+
+        list = db.getAllNotes();
+        this.noteList.addAll(list);
 
     }
 
@@ -79,34 +85,44 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
     }
 
-    public void buttonSearchClicked(View view)  {
-        //TODO
+    public void buttonSearchClicked(View view) {
+        //TODO Radius einführen??
+        mMap.clear();
         int counter = 0;
-        this.search = (EditText)this.findViewById(R.id.editSearch);
+        this.search = (EditText) this.findViewById(R.id.editSearch);
         searchStr = search.getText().toString();
 
 
-        if(searchStr.equals("")) {
+        if (searchStr.equals("")) {
             Toast.makeText(getApplicationContext(),
                     "Please enter a Dish", Toast.LENGTH_LONG).show();
             return;
         }
 
-        //TODO noch Fehler???
-        MyDatabaseHelper db = new DatabaseActivity2().getDatabase();
-        List<Note> list=  db.getAllNotes();
-
-        for(int i = 0; i < list.size(); i++){
-            Note note = list.get(i);
-            if (note.getNoteMenu().contains(searchStr)){
-                LatLng tmp = new LatLng(note.getNoteLatitude(),note.getNoteLongitude());
-                mMap.addMarker(new MarkerOptions().position(tmp));
+        //Alles ausgeben
+        if(searchStr.equals("ALLES")){
+            for(int i = 0; i < list.size(); i++){
+                Note note = list.get(i);
+                LatLng tmp = new LatLng(note.getNoteLatitude(), note.getNoteLongitude());
+                mMap.addMarker(new MarkerOptions().position(tmp).title(note.getNoteRestaurant()+" - "+note.getNoteMenu()));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(tmp, 12));
                 counter++;
             }
         }
 
+        for (int i = 0; i < list.size(); i++) {
+            Note note = list.get(i);
+            if (note.getNoteMenu().contains(searchStr)) {
+                LatLng tmp = new LatLng(note.getNoteLatitude(), note.getNoteLongitude());
+                mMap.addMarker(new MarkerOptions().position(tmp).title(note.getNoteRestaurant()+" - "+note.getNoteMenu()));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(tmp, 12));
+                counter++;
+            }
+        }
+
+
         //Wenn Gericht nicht vorhanden
-        if(counter < 1) {
+        if (counter < 1) {
             Toast.makeText(getApplicationContext(),
                     "The Dish you´d like to eat, is not near to you", Toast.LENGTH_LONG).show();
             return;
