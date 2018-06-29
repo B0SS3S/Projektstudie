@@ -11,13 +11,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView"
+        <CheckBox
+            android:id="@+id/checkBoxRadius"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="Set Radius"
-            tools:layout_editor_absoluteX="162dp"
-            tools:layout_editor_absoluteY="16dp" />
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="Activate Radius" />
 
         <SeekBar
             android:id="@+id/seekBar"
@@ -34,6 +33,14 @@
             android:layout_height="50dp"
             tools:layout_editor_absoluteX="162dp"
             tools:layout_editor_absoluteY="98dp" />
+
+        <Button
+            android:id="@+id/buttonRadiusSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="buttonSaveClicked"
+            android:text="Save" />
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

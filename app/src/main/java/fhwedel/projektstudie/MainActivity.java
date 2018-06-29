@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Marker mPosition;
     private EditText search;
     private String searchStr;
+    private RadiusActivity radiusActivity = new RadiusActivity();
     private int radius;
 
     private final List<Note> noteList = new ArrayList<Note>();
@@ -45,8 +46,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //TODO Ortung überprüfen
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -67,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         list = db.getAllNotes();
         this.noteList.addAll(list);
+        buildRadius();
     }
 
     @Override
@@ -75,8 +75,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void buttonSearchClicked(View view) {
-        //TODO Radius einführen?
-
         mMap.clear();
         int counter = 0;
         this.search = (EditText) this.findViewById(R.id.editSearch);
@@ -88,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             return;
         }
 
-        //Alles ausgeben
         if (searchStr.equals("ALLES")) {
             for (int i = 0; i < list.size(); i++) {
                 Note note = list.get(i);
@@ -101,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         for (int i = 0; i < list.size(); i++) {
             Note note = list.get(i);
+            //TODO Abfrage ob Restaurant im Radius liegt
             if (note.getNoteMenu().contains(searchStr)) {
                 LatLng tmp = new LatLng(note.getNoteLatitude(), note.getNoteLongitude());
                 mMap.addMarker(new MarkerOptions().position(tmp).title(note.getNoteRestaurant() + " - " + note.getNoteMenu()));
@@ -114,6 +112,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             Toast.makeText(getApplicationContext(),
                     "The Dish you´d like to eat, is not near to you", Toast.LENGTH_LONG).show();
             return;
+        }
+    }
+
+    private void buildRadius() {
+        if (radiusActivity.activated) {
+            radius = radiusActivity.getRadius();
+            //TODO
+            Toast.makeText(getApplicationContext(), "Radius activated: " + radius, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -151,9 +157,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void whenLocationUpdate(Location location) {
         //if (mMap != null) {
-            LatLng actualLocation = new LatLng(location.getLatitude(), location.getLongitude());
-            mPosition = mMap.addMarker(new MarkerOptions().position(actualLocation).title("Aktuelle Location"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actualLocation, 12));
+        LatLng actualLocation = new LatLng(location.getLatitude(), location.getLongitude());
+        mPosition = mMap.addMarker(new MarkerOptions().position(actualLocation).title("Aktuelle Location"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actualLocation, 12));
         //}
     }
 
