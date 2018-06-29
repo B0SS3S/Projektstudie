@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Marker mPosition;
     private EditText search;
     private String searchStr;
+    private int radius;
 
     private final List<Note> noteList = new ArrayList<Note>();
 
@@ -136,6 +137,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             Intent intent = new Intent(this, DatabaseActivity2.class);
             startActivity(intent);
             return true;
+        } else {
+            if (id == R.id.action_settings_radius) {
+
+                Intent intent2 = new Intent(this, RadiusActivity.class);
+                startActivity(intent2);
+                return true;
+            }
         }
         return super.onOptionsItemSelected(item);
     }

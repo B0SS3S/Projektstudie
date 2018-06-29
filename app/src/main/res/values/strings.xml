@@ -2,6 +2,8 @@
     <string name="app_name">Projektstudie</string>
 
     <string name="action_settings">Datenbank</string>
+    <string name="action_settings_radius">Radius</string>
+
 
     <string name="editText_hint_restaurant">Restaurant</string>
     <string name="editText_hint_product">Produkt</string>
