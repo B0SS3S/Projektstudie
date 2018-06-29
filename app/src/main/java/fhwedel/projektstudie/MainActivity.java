@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private final List<Note> noteList = new ArrayList<Note>();
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
-    MyDatabaseHelper db = new MyDatabaseHelper(this);
+
     List<Note> list;
 
     @Override
@@ -49,15 +49,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        db.createDefaultDatabase();
-
-        list = db.getAllNotes();
-        this.noteList.addAll(list);
-
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.maps);
         mapFragment.getMapAsync(this);
-
 
         // Versuchen Location zu bekommen
         try {
@@ -66,6 +60,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
         }
+
+        MyDatabaseHelper db = new MyDatabaseHelper(this);
+        db.createDefaultDatabase();
+
+        list = db.getAllNotes();
+        this.noteList.addAll(list);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.clear();
         int counter = 0;
         this.search = (EditText) this.findViewById(R.id.editSearch);
-        searchStr = search.getText().toString();
+        searchStr = search.getText().toString().toUpperCase();
 
         if (searchStr.equals("")) {
             Toast.makeText(getApplicationContext(),
@@ -142,11 +142,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     public void whenLocationUpdate(Location location) {
-        if (mMap != null) {
+        //if (mMap != null) {
             LatLng actualLocation = new LatLng(location.getLatitude(), location.getLongitude());
             mPosition = mMap.addMarker(new MarkerOptions().position(actualLocation).title("Aktuelle Location"));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actualLocation, 12));
-        }
+        //}
     }
 
     @Override

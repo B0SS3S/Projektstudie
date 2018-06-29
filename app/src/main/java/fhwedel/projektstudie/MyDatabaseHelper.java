@@ -64,29 +64,29 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
             //Hamburger Fraktion
             Note note1 = new Note("Minies",
-                    "Pizza, Pasta", 53.551223, 9.968452);
+                    "PIZZA, PASTA", 53.551223, 9.968452);
             Note note2 = new Note("Mickies",
-                    "Burger, Pommes", 53.559669, 9.995836);
+                    "BURGER, POMMES", 53.559669, 9.995836);
             Note note3 = new Note("Goofys",
-                    "Pasta, Salat", 53.554030, 9.991413);
+                    "PASTA, SALAT", 53.554030, 9.991413);
             Note note4 = new Note("Hafenkante",
-                    "Fisch", 53.543842, 9.9799203);
+                    "FISCH", 53.543842, 9.9799203);
             Note note5 = new Note("Boot",
-                    "Fisch, Fischbrötchen, Lachs", 53.562367, 10.004804);
+                    "FISCH, FISCHBRÖTCHEN, LACHS", 53.562367, 10.004804);
 
             //Wedeler Fraktion
             Note note6 = new Note("Wedeler Wurst",
-                    "Currywurst, Pommes", 53.577694, 9.727997);
+                    "CURRYWURST, POMMES", 53.577694, 9.727997);
             Note note7 = new Note("Taverna",
-                    "Gyyros, Salat", 53.576213, 9.715068);
+                    "GYROS, SALAT", 53.576213, 9.715068);
             Note note8 = new Note("McDonald´s",
-                    "Burger, Pommes", 53.583334, 9.723802);
+                    "BURGER, POMMES", 53.583334, 9.723802);
             Note note9 = new Note("Burger King",
-                    "Burger, Pommes", 53.583818, 9.726226);
+                    "BURGER, POMMES", 53.583818, 9.726226);
             Note note10 = new Note("Subways",
-                    "Sandwich, Baguette, Sub, Salat", 53.584478, 9.724300);
+                    "SANDWICH, BAGUETTE, SUB, SALAT", 53.584478, 9.724300);
             Note note11 = new Note("Italiano",
-                    "Pizza, Pasta, Salat", 53.577737, 9.742876);
+                    "PIZZA, PASTA, SALAT", 53.577737, 9.742876);
             this.addNote(note1);
             this.addNote(note2);
             this.addNote(note3);
