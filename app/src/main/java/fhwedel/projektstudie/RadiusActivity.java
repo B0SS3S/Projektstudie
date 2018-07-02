@@ -11,10 +11,12 @@ import android.widget.Toast;
 
 public class RadiusActivity extends AppCompatActivity {
     private SeekBar seekBar;
-    private TextView radius;
-    private CheckBox active;
+    private TextView textView;
+    private CheckBox checkBox;
+    private Button button;
+
     boolean activated = false;
-    private Button save;
+    int progress = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,21 +24,20 @@ public class RadiusActivity extends AppCompatActivity {
         setContentView(R.layout.activity_radius);
 
         this.seekBar = (SeekBar) findViewById(R.id.seekBar);
-        this.radius = (TextView) findViewById(R.id.text_radius);
-        this.active = (CheckBox) findViewById(R.id.checkBoxRadius);
-        this.save = (Button) findViewById(R.id.buttonRadiusSave);
+        this.textView = (TextView) findViewById(R.id.text_radius);
+        this.checkBox = (CheckBox) findViewById(R.id.checkBoxRadius);
+        this.button = (Button) findViewById(R.id.buttonRadiusSave);
 
-        this.radius.setText("Radius: " + seekBar.getProgress() + " / " + seekBar.getMax());
+        this.textView.setText("Radius: " + seekBar.getProgress() + " / " + seekBar.getMax());
 
         this.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int progress = 0;
+
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
                 progress = progressValue;
-                radius.setText("Radius: " + progressValue + " / " + seekBar.getMax());
+                textView.setText("Radius: " + progressValue + " / " + seekBar.getMax());
                 Toast.makeText(getApplicationContext(), "Updating Radius", Toast.LENGTH_SHORT).show();
-
             }
 
             @Override
@@ -45,20 +46,26 @@ public class RadiusActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                radius.setText("Radius: " + progress + " / " + seekBar.getMax());
+                textView.setText("Radius: " + progress + " / " + seekBar.getMax());
                 Toast.makeText(getApplicationContext(), "Updated Radius", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     public int getRadius() {
-        return Integer.parseInt(radius.toString());
+        return progress;
     }
 
-    public boolean isAtivated() {
-        if (active.isChecked()) {
-            activated = true;
+    public boolean isActivated() {
+        boolean tmp = false;
+        if (checkBox.isChecked()) {
+            tmp = true;
         }
-        return activated;
+        return tmp;
+    }
+
+    private void buttonSaveClicked(View view){
+        this.progress = progress;
+        this.activated = isActivated();
     }
 }

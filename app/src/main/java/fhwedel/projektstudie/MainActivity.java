@@ -2,6 +2,7 @@ package fhwedel.projektstudie;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -18,6 +19,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -36,7 +39,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private EditText search;
     private String searchStr;
     private RadiusActivity radiusActivity = new RadiusActivity();
-    private int radius;
+    LatLng actualLocation;
+    Circle circle;
 
     private final List<Note> noteList = new ArrayList<Note>();
 
@@ -66,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         list = db.getAllNotes();
         this.noteList.addAll(list);
-        buildRadius();
     }
 
     @Override
@@ -98,8 +101,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         for (int i = 0; i < list.size(); i++) {
             Note note = list.get(i);
-            //TODO Abfrage ob Restaurant im Radius liegt
-            if (note.getNoteMenu().contains(searchStr)) {
+            if (isInRadius(note, circle) && note.getNoteMenu().contains(searchStr)) {
                 LatLng tmp = new LatLng(note.getNoteLatitude(), note.getNoteLongitude());
                 mMap.addMarker(new MarkerOptions().position(tmp).title(note.getNoteRestaurant() + " - " + note.getNoteMenu()));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(tmp, 12));
@@ -107,20 +109,26 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
 
-        //Wenn Gericht nicht vorhanden
+        //Wenn Gericht nicht vorhanden oder nicht in der Nähe
         if (counter < 1) {
             Toast.makeText(getApplicationContext(),
-                    "The Dish you´d like to eat, is not near to you", Toast.LENGTH_LONG).show();
+                    "The Dish is not available", Toast.LENGTH_LONG).show();
             return;
         }
     }
 
-    private void buildRadius() {
-        if (radiusActivity.activated) {
-            radius = radiusActivity.getRadius();
-            //TODO
-            Toast.makeText(getApplicationContext(), "Radius activated: " + radius, Toast.LENGTH_SHORT).show();
+    public boolean isInRadius(Note note, Circle circle) {
+        boolean isInRadius = true;
+        float[] distance = new float[2];
+
+        Location.distanceBetween(note.getNoteLatitude(), note.getNoteLongitude(), circle.getCenter().latitude, circle.getCenter().longitude, distance);
+
+        if (distance[0] > circle.getRadius()) {
+            isInRadius = false;
+        } else {
+            isInRadius = true;
         }
+        return isInRadius;
     }
 
     @Override
@@ -139,13 +147,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-
             Intent intent = new Intent(this, DatabaseActivity2.class);
             startActivity(intent);
             return true;
         } else {
             if (id == R.id.action_settings_radius) {
-
                 Intent intent2 = new Intent(this, RadiusActivity.class);
                 startActivity(intent2);
                 return true;
@@ -156,16 +162,26 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     public void whenLocationUpdate(Location location) {
-        //if (mMap != null) {
-        LatLng actualLocation = new LatLng(location.getLatitude(), location.getLongitude());
-        mPosition = mMap.addMarker(new MarkerOptions().position(actualLocation).title("Aktuelle Location"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actualLocation, 12));
-        //}
+        if (mMap != null) {
+            actualLocation = new LatLng(location.getLatitude(), location.getLongitude());
+            mPosition = mMap.addMarker(new MarkerOptions().position(actualLocation).title("Aktuelle Location"));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actualLocation, 12));
+            //Radius einbeziehen
+            int radius = radiusActivity.getRadius() * 1000;
+            addCircle(actualLocation, radius);
+        }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         LocationService location = new LocationService(getApplicationContext(), this);
+    }
+
+    public void addCircle(LatLng latLng, int radius) {
+        if (radiusActivity.isActivated()) {
+            circle = mMap.addCircle(new CircleOptions().center(latLng).radius(radius).strokeColor(Color.RED).fillColor(Color.BLUE));
+            Toast.makeText(getApplicationContext(), "Radius activated: " + radius, Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
