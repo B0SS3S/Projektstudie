@@ -12,11 +12,9 @@ import android.widget.Toast;
 public class RadiusActivity extends AppCompatActivity {
     private SeekBar seekBar;
     private TextView textView;
-    private CheckBox checkBox;
     private Button button;
 
-    boolean activated = false;
-    int progress = 0;
+    int progress = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +23,6 @@ public class RadiusActivity extends AppCompatActivity {
 
         this.seekBar = (SeekBar) findViewById(R.id.seekBar);
         this.textView = (TextView) findViewById(R.id.text_radius);
-        this.checkBox = (CheckBox) findViewById(R.id.checkBoxRadius);
         this.button = (Button) findViewById(R.id.buttonRadiusSave);
 
         this.textView.setText("Radius: " + seekBar.getProgress() + " / " + seekBar.getMax());
@@ -56,16 +53,7 @@ public class RadiusActivity extends AppCompatActivity {
         return progress;
     }
 
-    public boolean isActivated() {
-        boolean tmp = false;
-        if (checkBox.isChecked()) {
-            tmp = true;
-        }
-        return tmp;
-    }
-
     private void buttonSaveClicked(View view){
         this.progress = progress;
-        this.activated = isActivated();
     }
 }

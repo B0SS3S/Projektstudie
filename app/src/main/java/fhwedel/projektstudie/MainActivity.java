@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private RadiusActivity radiusActivity = new RadiusActivity();
     LatLng actualLocation;
     Circle circle;
+    int radius;
 
     private final List<Note> noteList = new ArrayList<Note>();
 
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void buttonSearchClicked(View view) {
-        mMap.clear();
+        //mMap.clear();
         int counter = 0;
         this.search = (EditText) this.findViewById(R.id.editSearch);
         searchStr = search.getText().toString().toUpperCase();
@@ -94,14 +95,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Note note = list.get(i);
                 LatLng tmp = new LatLng(note.getNoteLatitude(), note.getNoteLongitude());
                 mMap.addMarker(new MarkerOptions().position(tmp).title(note.getNoteRestaurant() + " - " + note.getNoteMenu()));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(tmp, 12));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actualLocation, 12));
                 counter++;
             }
         }
 
         for (int i = 0; i < list.size(); i++) {
             Note note = list.get(i);
-            if (isInRadius(note, circle) && note.getNoteMenu().contains(searchStr)) {
+            if (note.getNoteMenu().contains(searchStr) && isInRadius(note, circle)) {
                 LatLng tmp = new LatLng(note.getNoteLatitude(), note.getNoteLongitude());
                 mMap.addMarker(new MarkerOptions().position(tmp).title(note.getNoteRestaurant() + " - " + note.getNoteMenu()));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(tmp, 12));
@@ -162,14 +163,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     public void whenLocationUpdate(Location location) {
-        if (mMap != null) {
-            actualLocation = new LatLng(location.getLatitude(), location.getLongitude());
-            mPosition = mMap.addMarker(new MarkerOptions().position(actualLocation).title("Aktuelle Location"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actualLocation, 12));
-            //Radius einbeziehen
-            int radius = radiusActivity.getRadius() * 1000;
-            addCircle(actualLocation, radius);
-        }
+        actualLocation = new LatLng(location.getLatitude(), location.getLongitude());
+        mPosition = mMap.addMarker(new MarkerOptions().position(actualLocation).title("Aktuelle Location"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actualLocation, 12));
+        radius = radiusActivity.getRadius() * 1000;
+        addCircle(actualLocation, radius);
     }
 
     @Override
@@ -178,10 +176,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void addCircle(LatLng latLng, int radius) {
-        if (radiusActivity.isActivated()) {
-            circle = mMap.addCircle(new CircleOptions().center(latLng).radius(radius).strokeColor(Color.RED).fillColor(Color.BLUE));
-            Toast.makeText(getApplicationContext(), "Radius activated: " + radius, Toast.LENGTH_SHORT).show();
-        }
+        circle = mMap.addCircle(new CircleOptions().center(latLng).radius(radius).strokeColor(Color.BLUE).fillColor(Color.argb(30, 0, 50, 245)));
+        Toast.makeText(getApplicationContext(), "Radius activated: " + radius, Toast.LENGTH_SHORT).show();
     }
-
 }

@@ -87,6 +87,15 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                     "SANDWICH, BAGUETTE, SUB, SALAT", 53.584478, 9.724300);
             Note note11 = new Note("Italiano",
                     "PIZZA, PASTA, SALAT", 53.577737, 9.742876);
+
+            //Test für Emulator
+            Note note12 = new Note("TestEins",
+                    "CURRYWURST, POMMES", 37.416328, -122.086024);
+            Note note13 = new Note("TestZwei",
+                    "TEST", 37.424236, -122.090315);
+            Note note14 = new Note("TestDrei",
+                    "SANDWICH", 37.439503, -122.113576);
+
             this.addNote(note1);
             this.addNote(note2);
             this.addNote(note3);
@@ -98,6 +107,11 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             this.addNote(note9);
             this.addNote(note10);
             this.addNote(note11);
+
+            //Test
+            this.addNote(note12);
+            this.addNote(note13);
+            this.addNote(note14);
         }
     }
 

@@ -11,13 +11,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <CheckBox
-            android:id="@+id/checkBoxRadius"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="Activate Radius" />
-
         <SeekBar
             android:id="@+id/seekBar"
             android:layout_width="match_parent"
