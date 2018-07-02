@@ -79,10 +79,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void buttonSearchClicked(View view) {
-        //mMap.clear();
+        mMap.clear();
         int counter = 0;
         this.search = (EditText) this.findViewById(R.id.editSearch);
         searchStr = search.getText().toString().toUpperCase();
+        mPosition = mMap.addMarker(new MarkerOptions().position(actualLocation).title("Aktuelle Location"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actualLocation, 12));
+        radius = radiusActivity.getRadius() * 1000;
+        addCircle(actualLocation, radius);
 
         if (searchStr.equals("")) {
             Toast.makeText(getApplicationContext(),
