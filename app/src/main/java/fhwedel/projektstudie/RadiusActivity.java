@@ -1,5 +1,8 @@
 package fhwedel.projektstudie;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +16,6 @@ public class RadiusActivity extends AppCompatActivity {
     private TextView textView;
     private Button button;
 
-    int radius;
     int progress = 5;
 
     @Override
@@ -33,7 +35,7 @@ public class RadiusActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
                 progress = progressValue;
-                textView.setText("Radius: " + progressValue + " / " + seekBar.getMax());
+                textView.setText("Radius: " + progress + " / " + seekBar.getMax());
                 Toast.makeText(getApplicationContext(), "Updating Radius", Toast.LENGTH_SHORT).show();
             }
 
@@ -44,20 +46,27 @@ public class RadiusActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 textView.setText("Radius: " + progress + " / " + seekBar.getMax());
-                Toast.makeText(getApplicationContext(), "Updated Radius", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Stopped Updating Radius", Toast.LENGTH_SHORT).show();
             }
         });
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                radius = progress;
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(RadiusActivity.this);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt("Radius", progress);
+                editor.apply();
+                Toast.makeText(getApplicationContext(), "Saved Radius: " + progress, Toast.LENGTH_SHORT).show();
             }
+
         });
     }
 
+
     public int getRadius() {
-        radius = progress;
-        return radius;
+
+        return progress;
     }
+
 }

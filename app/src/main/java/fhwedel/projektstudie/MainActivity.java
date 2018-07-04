@@ -2,9 +2,11 @@ package fhwedel.projektstudie;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -63,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             LocationService location = new LocationService(getApplicationContext(), this);
         } catch (NoLocationException noLocEx) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-
         }
 
         MyDatabaseHelper db = new MyDatabaseHelper(this);
@@ -71,6 +72,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         list = db.getAllNotes();
         this.noteList.addAll(list);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("Radius", 5);
+        editor.apply();
     }
 
     @Override
@@ -85,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         searchStr = search.getText().toString().toUpperCase();
         mPosition = mMap.addMarker(new MarkerOptions().position(actualLocation).title("Aktuelle Location"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actualLocation, 12));
-        radius = radiusActivity.getRadius() * 1000;
+        radius = getRadius() * 1000;
         addCircle(actualLocation, radius);
 
         if (searchStr.equals("")) {
@@ -170,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         actualLocation = new LatLng(location.getLatitude(), location.getLongitude());
         mPosition = mMap.addMarker(new MarkerOptions().position(actualLocation).title("Aktuelle Location"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actualLocation, 12));
-        radius = radiusActivity.getRadius() * 1000;
+        radius = getRadius() * 1000;
         addCircle(actualLocation, radius);
     }
 
@@ -181,6 +187,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void addCircle(LatLng latLng, int radius) {
         circle = mMap.addCircle(new CircleOptions().center(latLng).radius(radius).strokeColor(Color.BLUE).fillColor(Color.argb(30, 0, 50, 245)));
-        Toast.makeText(getApplicationContext(), "Radius activated: " + radius, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Radius activated: " + radius, Toast.LENGTH_SHORT).show();
+    }
+
+    public int getRadius(){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return preferences.getInt("Radius", 5);
     }
 }
