@@ -27,6 +27,12 @@ public class RadiusActivity extends AppCompatActivity {
         this.textView = (TextView) findViewById(R.id.text_radius);
         this.button = (Button) findViewById(R.id.buttonRadiusSave);
 
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(RadiusActivity.this);
+        int tmp = preferences.getInt("Radius", 5);
+        if (tmp != progress){
+            seekBar.setProgress(tmp);
+        }
+
         this.textView.setText("Radius: " + seekBar.getProgress() + " / " + seekBar.getMax());
 
         this.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -36,7 +42,6 @@ public class RadiusActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
                 progress = progressValue;
                 textView.setText("Radius: " + progress + " / " + seekBar.getMax());
-                Toast.makeText(getApplicationContext(), "Updating Radius", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -46,7 +51,6 @@ public class RadiusActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 textView.setText("Radius: " + progress + " / " + seekBar.getMax());
-                Toast.makeText(getApplicationContext(), "Stopped Updating Radius", Toast.LENGTH_SHORT).show();
             }
         });
 
