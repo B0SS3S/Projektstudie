@@ -21,7 +21,6 @@ import android.widget.ListView;
 import java.util.List;
 
 public class DatabaseActivity extends AppCompatActivity {
-
     private DataSource dataSource;
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 

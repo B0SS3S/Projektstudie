@@ -56,6 +56,7 @@ public class DataSource {
         long insertId = database.insert(DatabaseHelper.TABLE_PROJEKTSTUDIE, null, values);
 
         Cursor cursor = database.query(DatabaseHelper.TABLE_PROJEKTSTUDIE,
+                //"='" + suche + "'"
                 columns, DatabaseHelper.COLUMN_ID + "=" + insertId,
                 null, null, null, null);
 
