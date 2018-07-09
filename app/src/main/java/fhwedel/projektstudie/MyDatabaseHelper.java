@@ -87,14 +87,56 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                     "SANDWICH, BAGUETTE, SUB, SALAT", 53.584478, 9.724300);
             Note note11 = new Note("Italiano",
                     "PIZZA, PASTA, SALAT", 53.577737, 9.742876);
+            Note note12 = new Note("Taverna Zum Griechen",
+                    "GYROS, FLEISCH, FISCH, POMMES", 53.576218, 9.715076);
+            Note note13 = new Note("Thai & Tolerance",
+                    "THAILÄNDISCH, SUPPE, REIS, FLEISCH", 53.581983, 9.705970);
+            Note note14 = new Note("Aytac",
+                    "SALAT, FLEISCH, POMMES", 53.577343, 9.705034);
+            Note note15= new Note("Highlight Sportsbar & Restaurant",
+                    "BURGER, SALAT, POMMES, FLEISCH", 53.575211, 9.700013);
+            Note note16 = new Note("elbe1",
+                    "FISCH, BRATKARTOFFELN, RISOTTO", 53.571151, 9.693366);
+            Note note17 = new Note("Monsoon",
+                    "INDISCH, NAANBROT, CURRY", 53.583942, 9.698216);
+            Note note18 = new Note("Porter-House Wedel",
+                    "FLEISCH, STEAK, POMMES, FISCH, SALAT", 53.583461, 9.697441);
+            Note note19 = new Note("Asia Haus",
+                    "ASIATISCH, CHINESISCH, REIS, FLEISCH, FISCH", 53.579292, 9.704675);
+            Note note20 = new Note("La Giara",
+                    "PIZZA, FLEISCH, FISCH, PASTA", 53.582603, 9.700738);
+            Note note21 = new Note("Restaurant Mühlenstein",
+                    "SALAT, FLEISCH, FISCH, BURGER, PASTA", 53.582604, 9.701142);
+            Note note22 = new Note("Italiano",
+                    "PIZZA, PASTA, SALAT", 53.577737, 9.742876);
+
+            // Blankenese
+            Note note23 = new Note("Athen Pallas",
+                    "GYROS, POMMES, FLEISCH", 53.566724, 9.795779);
+            Note note24 = new Note("Asiahub",
+                    "ASIATISCH, REIS, ASIANUDELN, FLEISCH, GEMÜSE", 53.564152, 9.812978);
+            Note note25 = new Note("Ristorante Fal Fabbro",
+                    "PIZZA, CALAMARI, SALAT, PASTA, FISCH", 53.559333, 9.811240);
+            Note note26 = new Note("Rio Grande",
+                    "FLEISCH, BRATKARTOFFELN, POMMES, SALAT, STEAK", 53.561883, 9.820075);
+            Note note27 = new Note("Peter Pane",
+                    "BURGER, POMMES, SALAT", 53.563145, 9.815729);
+
 
             //Test für Emulator
-            Note note12 = new Note("TestEins",
+            Note note28 = new Note("TestEins",
                     "CURRYWURST, POMMES", 37.416328, -122.086024);
-            Note note13 = new Note("TestZwei",
+            Note note29 = new Note("TestZwei",
                     "TEST", 37.424236, -122.090315);
-            Note note14 = new Note("TestDrei",
+            Note note30 = new Note("TestDrei",
                     "SANDWICH", 37.439503, -122.113576);
+
+            // Test Hittfeld
+            Note note31 = new Note("Aroma Bistro",
+                    "BRUSCHETTA, PIZZA, SALAT, PASTA", 53.388087, 9.983036);
+            Note note32 = new Note("Restaurant Rossini",
+                    "SALAT, PASTA, FISCH, FLEISCH", 53.386318, 9.983438);
+
 
             this.addNote(note1);
             this.addNote(note2);
@@ -107,11 +149,31 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             this.addNote(note9);
             this.addNote(note10);
             this.addNote(note11);
-
-            //Test
             this.addNote(note12);
             this.addNote(note13);
             this.addNote(note14);
+            this.addNote(note15);
+            this.addNote(note16);
+            this.addNote(note17);
+            this.addNote(note18);
+            this.addNote(note19);
+            this.addNote(note20);
+            this.addNote(note21);
+            this.addNote(note22);
+            this.addNote(note23);
+            this.addNote(note24);
+            this.addNote(note25);
+            this.addNote(note26);
+            this.addNote(note27);
+
+            //Test
+            this.addNote(note28);
+            this.addNote(note29);
+            this.addNote(note30);
+
+            // Test Hittfeld
+            this.addNote(note31);
+            this.addNote(note32);
         }
     }
 
