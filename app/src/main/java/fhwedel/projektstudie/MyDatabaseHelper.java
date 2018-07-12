@@ -138,6 +138,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                     "SALAT, PASTA, FISCH, FLEISCH", 53.386318, 9.983438);
 
 
+            // Notes hinzufügen
             this.addNote(note1);
             this.addNote(note2);
             this.addNote(note3);
