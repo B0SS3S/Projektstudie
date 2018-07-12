@@ -93,7 +93,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                     "THAILÄNDISCH, SUPPE, REIS, FLEISCH", 53.581983, 9.705970);
             Note note14 = new Note("Aytac",
                     "SALAT, FLEISCH, POMMES", 53.577343, 9.705034);
-            Note note15= new Note("Highlight Sportsbar & Restaurant",
+            Note note15 = new Note("Highlight Sportsbar & Restaurant",
                     "BURGER, SALAT, POMMES, FLEISCH", 53.575211, 9.700013);
             Note note16 = new Note("elbe1",
                     "FISCH, BRATKARTOFFELN, RISOTTO", 53.571151, 9.693366);

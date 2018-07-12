@@ -21,6 +21,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -86,10 +87,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void buttonSearchClicked(View view) {
         mMap.clear();
+
+        MyDatabaseHelper db = new MyDatabaseHelper(this);
+        db.createDefaultDatabase();
+        list = db.getAllNotes();
+        this.noteList.addAll(list);
+
         int counter = 0;
         this.search = (EditText) this.findViewById(R.id.editSearch);
         searchStr = search.getText().toString().toUpperCase();
-        mPosition = mMap.addMarker(new MarkerOptions().position(actualLocation).title("Aktuelle Location"));
+        mPosition = mMap.addMarker(new MarkerOptions().position(actualLocation).title("Aktuelle Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actualLocation, 12));
         radius = getRadius() * 1000;
         addCircle(actualLocation, radius);
@@ -174,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void whenLocationUpdate(Location location) {
         actualLocation = new LatLng(location.getLatitude(), location.getLongitude());
-        mPosition = mMap.addMarker(new MarkerOptions().position(actualLocation).title("Aktuelle Location"));
+        mPosition = mMap.addMarker(new MarkerOptions().position(actualLocation).title("Aktuelle Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actualLocation, 12));
         radius = getRadius() * 1000;
         addCircle(actualLocation, radius);
@@ -190,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         //Toast.makeText(getApplicationContext(), "Radius activated: " + radius, Toast.LENGTH_SHORT).show();
     }
 
-    public int getRadius(){
+    public int getRadius() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         return preferences.getInt("Radius", 5);
     }

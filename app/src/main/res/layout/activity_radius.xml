@@ -15,6 +15,7 @@
             android:id="@+id/seekBar"
             android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:min="1"
             android:max="50"
             android:progress="5"
             tools:layout_editor_absoluteX="101dp"
